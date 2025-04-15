@@ -1,0 +1,56 @@
+---
+# Source: chat-backend/templates/configmap.tpl
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: chat-backend
+data: 
+  test: test
+---
+# Source: chat-backend/templates/service.tpl
+apiVersion: v1
+kind: Service
+metadata:
+  name: chat-backend
+spec:
+  selector:
+    app.kubernetes.io/name: chat-backend
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+---
+# Source: chat-backend/templates/deployment.tpl
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-backend
+  labels:
+    app: chat-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chat-backend
+  template:
+    metadata:
+      labels:
+        app: chat-backend
+    spec:
+      containers:
+      - name: chat-backend
+        image: "chat:backend"
+        ports:
+        - containerPort: 3000
+        envFrom:         
+        - configMapRef:
+            name: chat-backend
+        - secretRef:
+            name: chat-backend
+        resources:           
+          requests:
+              cpu: '0.25'
+              memory: '64Mi'
+          limits: 
+              cpu: '1'
+              memory: '64Mi'
