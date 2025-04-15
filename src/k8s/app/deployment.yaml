@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-backend
+  labels:
+    app: chat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chat-backend
+  template:
+    metadata:
+      labels:
+        app: chat-backend
+    spec:
+      containers:
+      - name: chat-backend
+        image: shalevatias/chat-app
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - secretRef:
+            name: chat-backend
+        - configMapRef:
+            name: chat-backend

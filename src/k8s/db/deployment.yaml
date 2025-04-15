@@ -1,0 +1,27 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chat-db
+  labels:
+    app: chat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chat-db
+  template:
+    metadata:
+      labels:
+        app: chat-db
+    spec:
+      containers:
+      - name: chat-db
+        image: shalevatias/chat-db
+        ports:
+        - containerPort: 5432
+        envFrom:
+        - secretRef:
+            name: chat-backend
+        - configMapRef:
+            name: chat-backend
