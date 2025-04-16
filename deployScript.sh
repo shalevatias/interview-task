@@ -8,6 +8,9 @@ kubectl apply -R -f monitoring/filebeat/
 echo "Deploying application"
 kubectl apply -R -f src/k8s/
 
+# Wait for the services to be up and running
+sleep 5
+
 # Forward Elasticsearch
 echo "Port-forwarding Elasticsearch on http://localhost:9200"
 kubectl port-forward svc/elasticsearch 9300:9200 &
