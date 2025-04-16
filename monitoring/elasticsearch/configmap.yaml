@@ -6,14 +6,10 @@ metadata:
     component: elasticsearch
 data:
   elasticsearch.yml: |
-    node.name: Master
+    node.name: Master 
     http:
       host: 0.0.0.0
       port: 9200
     bootstrap.memory_lock: true
     xpack.license.self_generated.type: basic
     xpack.security.enabled: true
-    xpack.monitoring.enabled: false
-    xpack.graph.enabled: false
-    xpack.watcher.enabled: false
-    xpack.ml.enabled: false
